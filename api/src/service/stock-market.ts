@@ -6,6 +6,6 @@ export class StockMarketService {
   @GET
   @Path('/')
   pointsOfInterest() {
-    
+    return 'test';
   }
 }

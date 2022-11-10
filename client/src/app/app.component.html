@@ -1,6 +1,13 @@
 <div class="page">
-  <div class="header"></div>
+  <div class="header">
+    <h1>Stock market advisor</h1>
+  </div>
   <div class="body-container">
-    
+    <mat-form-field>
+      <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl">
+      <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker [showSeconds]="true">
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
   </div>
 </div>

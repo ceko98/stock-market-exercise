@@ -123,12 +123,28 @@
     ora "5.4.1"
     rxjs "6.6.7"
 
+"@angular-material-components/datetime-picker@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@angular-material-components/datetime-picker/-/datetime-picker-8.0.0.tgz#0e256ba1e5c5eb1109c218bb4acb4a14590cd894"
+  integrity sha512-mpndWbRimp77omkfa9LlpY21FN8xOFH8NV4hSLOxWg7RpUa1gZXLtW6mTRuDQ9cpWO6m9qH/8ioHKtvY+Epckg==
+  dependencies:
+    tslib "^2.3.0"
+
 "@angular/animations@^14.2.0":
   version "14.2.10"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-14.2.10.tgz#d9f5abf4b051a6de0e2665b659b89f5b26fa6a76"
   integrity sha512-t3ntvZvEI3lFrsJOC2qcF4ZCD04rVXWt8769YfearACBMsAXF0OAsLFcFHSDxcJelLGvQlXtBhjhe4IFAnQiZw==
   dependencies:
     tslib "^2.3.0"
+
+"@angular/cdk@^14.2.7":
+  version "14.2.7"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-14.2.7.tgz#65eb6fbbeed6120fad4e3913aa66f8b74c853ac3"
+  integrity sha512-/tEsYaUbDSnfEmKVvAMramIptmhI67O+9STjOV0i+74XR2NospeK0fkbywIANu1n3w6AHGMotvRWJrjmbCElFg==
+  dependencies:
+    tslib "^2.3.0"
+  optionalDependencies:
+    parse5 "^5.0.0"
 
 "@angular/cli@~14.2.9":
   version "14.2.9"
@@ -4687,6 +4703,11 @@ parse5-sax-parser@^6.0.1:
   integrity sha512-kXX+5S81lgESA0LsDuGjAlBybImAChYRMT+/uKCEXFBFOeEhS52qUCydGhU3qLRD8D9DVjaUo821WK7DM4iCeg==
   dependencies:
     parse5 "^6.0.1"
+
+parse5@^5.0.0:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.1.tgz#f68e4e5ba1852ac2cadc00f4555fff6c2abb6178"
+  integrity sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==
 
 parse5@^6.0.1:
   version "6.0.1"
