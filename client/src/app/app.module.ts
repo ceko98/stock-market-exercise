@@ -1,4 +1,5 @@
 import { NgxMatTimepickerModule, NgxMatDatetimePickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,6 +31,7 @@ import { AppComponent } from './app.component';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
