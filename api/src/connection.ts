@@ -1,3 +1,5 @@
+import { config } from "./config";
+
 export const connection = {
-  filename: '../database/stock.sqlite',
+  filename: config.get('db').file,
 };

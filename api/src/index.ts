@@ -1,10 +1,11 @@
+import cors from 'cors';
 import express from 'express';
 import { Server } from 'typescript-rest';
+import { config } from './config';
 import { StockMarketService } from './service/stock-market';
-import cors from 'cors';
 
 const app = express();
-const port = 3000;
+const port = config.get('port');
 
 app.use(cors());
 Server.buildServices(app, StockMarketService);
