@@ -7,7 +7,7 @@ import { BuySellResult } from '../types/stocks';
   providedIn: 'root'
 })
 export class StockApiService {
-  private readonly url = 'http://localhost:3000';
+  private readonly url = 'http://api:3000';
 
   constructor(private http: HttpClient) { }
 

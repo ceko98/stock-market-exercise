@@ -1,0 +1,21 @@
+version: '3'
+services:
+
+  api:
+    build: ./api
+    networks:
+      - frontend
+    environment:
+      PORT: $API_PORT
+
+  client:
+    build: ./client
+    ports:
+      - 80:80
+    networks:
+      - frontend
+    environment:
+      PORT: $CLIENT_PORT
+
+networks:
+  frontend:
