@@ -1,16 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
+import { BuySellResult } from '../types/stocks';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockApiService {
-  private readonly url = 'localhost:4200';
+  private readonly url = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
 
-  stockMarketTime() {
+  getBuySellTimes() {
     const url = `${this.url}/stock-market`;
-    this.http.get<any>(this.url);
+    return this.http.get<{ result: BuySellResult }>(url)
+      .pipe(map(({ result }) => result));
   }
 }

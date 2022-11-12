@@ -6,5 +6,6 @@ exports.default = {
     useNullAsDefault: true,
     connection,
     migrations: './migrations',
+    seeds: './seeds',
   },
 };
