@@ -20,7 +20,24 @@
         <ngx-mat-datetime-picker #toPicker [showSeconds]="true"></ngx-mat-datetime-picker>
       </mat-form-field>
 
+      <mat-form-field>
+        <input matInput placeholder="Enter funds" type="number" formControlName="funds">
+      </mat-form-field>
+
       <button class="get-button" mat-stroked-button (click)="getStockBuySellBest()">Get Dates</button>
     </form>
+    <mat-card *ngIf="bestPricePoints$ | async as points" class="prices-card">
+      <mat-card-header>
+        <mat-card-title>Best prices</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="points.buy">Best time to buy: {{points.buy.time | date:'medium'}}</div>
+        <div *ngIf="points.sell">Best time to sell: {{points.sell.time | date:'medium'}}</div>
+        <div *ngIf="stockStats$ | async as stats">
+          <div>Stocks bought: {{stats.stocksBoughtAndSold}}</div>
+          <div>Total profit: {{stats.profit}}</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

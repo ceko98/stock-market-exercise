@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BestPriceResult } from '../types/stocks';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class StockApiService {
   constructor(private http: HttpClient) { }
 
   getBuySellTimes(from: Date, to: Date) {
-    return this.http.get<{ buy: Date | null, sell: Date | null }>(
+    return this.http.get<BestPriceResult>(
       this.url,
       { params: { from: from.toISOString(), to: to.toISOString() } },
     );

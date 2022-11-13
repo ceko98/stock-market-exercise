@@ -17,5 +17,13 @@
         height: 40px;
       }
     }
+
+    .prices-card {
+      max-width: 550px;
+
+      mat-card-content {
+        margin: 0 16px;
+      }
+    }
   }
 }

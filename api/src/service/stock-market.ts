@@ -9,7 +9,7 @@ export class StockMarketService {
   async getBuySellPoints(
     @QueryParam('from') fromTime?: string,
     @QueryParam('to') toTime?: string,
-  ): Promise<{ buy: Date | null, sell: Date | null }> {
+  ): Promise<{ buy: Stock | null, sell: Stock | null }> {
     if (!fromTime || !toTime) {
       throw new Errors.BadRequestError('Missing query params');
     }
@@ -46,7 +46,7 @@ export class StockMarketService {
       }      
     }
 
-    return { buy: new Date(bestBuyPoint.time), sell: new Date(bestSellPoint.time) };
+    return { buy: bestBuyPoint, sell: bestSellPoint };
   }
 
   @GET
