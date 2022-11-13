@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { StockApiService } from './services/stock-api.service';
 
 @Component({
@@ -13,7 +14,11 @@ export class AppComponent {
     toDate: new FormControl(null, Validators.required),
   });
 
-  constructor(private stockApi: StockApiService) { }
+  dataRange$: Observable<{ start: Date, end: Date }>;
+
+  constructor(private stockApi: StockApiService) {
+    this.dataRange$ = stockApi.getDataRange();
+  }
 
   getStockBuySellBest() {
     const { fromDate, toDate } = this.dateControl.value; 
@@ -21,6 +26,6 @@ export class AppComponent {
       return;
     }
     
-    this.stockApi.getBuySellTimes().subscribe(console.log)
+    this.stockApi.getBuySellTimes(fromDate, toDate).subscribe(console.log)
   }
 }

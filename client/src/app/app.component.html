@@ -4,6 +4,9 @@
   </div>
   <mat-divider></mat-divider>
   <div class="body-container">
+    <div *ngIf="dataRange$ | async as dataRange">
+      Allowed Date Range: {{dataRange.start | date:'medium'}} - {{dataRange.end | date:'medium'}}
+    </div>
     <form class="input-container" [formGroup]="dateControl">
       <mat-form-field>
         <input matInput [ngxMatDatetimePicker]="fromPicker" placeholder="Choose from date" formControlName="fromDate">

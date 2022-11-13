@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
-import { BuySellResult } from '../types/stocks';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +9,14 @@ export class StockApiService {
 
   constructor(private http: HttpClient) { }
 
-  getBuySellTimes() {
-    return this.http.get<{ result: BuySellResult }>(this.url)
-      .pipe(map(({ result }) => result));
+  getBuySellTimes(from: Date, to: Date) {
+    return this.http.get<{ buy: Date | null, sell: Date | null }>(
+      this.url,
+      { params: { from: from.toISOString(), to: to.toISOString() } },
+    );
+  }
+
+  getDataRange() {
+    return this.http.get<{ start: Date, end: Date }>(`${this.url}/range`);
   }
 }

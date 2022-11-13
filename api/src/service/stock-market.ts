@@ -9,7 +9,7 @@ export class StockMarketService {
   async getBuySellPoints(
     @QueryParam('from') fromTime?: string,
     @QueryParam('to') toTime?: string,
-  ): Promise<{ buy: Date, sell: Date }> {
+  ): Promise<{ buy: Date | null, sell: Date | null }> {
     if (!fromTime || !toTime) {
       throw new Errors.BadRequestError('Missing query params');
     }
@@ -19,18 +19,48 @@ export class StockMarketService {
     if (isNaN(fromDate.getTime()) || isNaN(toDate.getTime())) {
       throw new Errors.BadRequestError('Invalida date formats');
     }
+    if (fromDate.getTime() > toDate.getTime()) {
+      throw new Errors.BadRequestError('Invalida date range. From date must be before to date.');
+    }
 
-    const stocks = await Stock.query().whereBetween('time', [fromDate, toDate]);
-    console.log(stocks);
+    const { start, end } = await this.getTimeRange();
+    if (fromDate.getTime() < start.getTime() || toDate.getTime() > end.getTime()) {
+      throw new Errors.BadRequestError('Invalida date range. Dates out of bound.');
+    }
 
-    let bestBuyPoint = null;
-    for (let i = 0; i < stocks.length; i++) {
-      for (let j = i + 1; j < stocks.length; j++) {
-        
+    const stocks = await Stock.query().whereBetween('time', [fromDate, toDate]).orderBy('time');
+    if (stocks.length === 0) {
+      return { buy: null, sell: null };
+    }
+
+    let bestBuyPoint = stocks[0];
+    let bestSellPoint = stocks[0];
+    for (let buyIdx = 1; buyIdx < stocks.length - 1; buyIdx++) {
+      for (let sellIdx = buyIdx + 1; sellIdx < stocks.length; sellIdx++) {
+        const currentProfit = stocks[sellIdx].price - stocks[buyIdx].price;
+        const currentBestProfit = bestSellPoint.price - bestBuyPoint.price;
+        if (currentProfit > currentBestProfit) {
+          bestBuyPoint = stocks[buyIdx];
+          bestSellPoint = stocks[sellIdx];
+        }
       }      
     }
-    
 
-    return { buy: new Date(), sell: new Date() };
+    return { buy: new Date(bestBuyPoint.time), sell: new Date(bestSellPoint.time) };
+  }
+
+  @GET
+  @Path('/range')
+  async getDataTimeRange(): Promise<{ start: Date, end: Date }> {
+    return this.getTimeRange();
+  }
+
+  private async getTimeRange() {
+    const range = await Stock.knexQuery()
+      .min('time as start')
+      .max('time as end')
+      .first();
+
+    return { start: new Date(range?.start), end: new Date(range?.end) };
   }
 }
