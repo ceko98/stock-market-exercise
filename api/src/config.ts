@@ -12,7 +12,7 @@ export const config = convict({
       doc: 'SQLite db file path',
       format: String,
       env: 'SQLITE_FILE',
-      default: '../database/stock.sqlite',
+      default: './database/stock.sqlite',
     },
   },
 });

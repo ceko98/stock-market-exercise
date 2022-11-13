@@ -7,13 +7,12 @@ import { BuySellResult } from '../types/stocks';
   providedIn: 'root'
 })
 export class StockApiService {
-  private readonly url = 'http://api:3000';
+  private readonly url = '/stock-market';
 
   constructor(private http: HttpClient) { }
 
   getBuySellTimes() {
-    const url = `${this.url}/stock-market`;
-    return this.http.get<{ result: BuySellResult }>(url)
+    return this.http.get<{ result: BuySellResult }>(this.url)
       .pipe(map(({ result }) => result));
   }
 }
