@@ -15,4 +15,12 @@ export const config = convict({
       default: './database/stock.sqlite',
     },
   },
+  test: {
+    file: {
+      doc: 'SQLite db test file path',
+      format: String,
+      env: 'SQLITE_FILE_TEST',
+      default: '../../database/test.sqlite',
+    },
+  }
 });

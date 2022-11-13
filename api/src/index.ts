@@ -4,7 +4,7 @@ import { Server } from 'typescript-rest';
 import { config } from './config';
 import { StockMarketService } from './service/stock-market';
 
-const app = express();
+export const app = express();
 const port = config.get('port');
 
 app.use(cors());
