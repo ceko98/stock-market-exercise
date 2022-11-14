@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, filter, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, filter, map, Observable, of } from 'rxjs';
 import { StockApiService } from './services/stock-api.service';
 import { BestPriceResult } from './types/stocks';
 
@@ -24,6 +24,8 @@ export class AppComponent {
   dataRange$: Observable<{ start: Date, end: Date }>;
   bestPricePoints$ = new BehaviorSubject<BestPriceResult | null>(null);
   stockStats$: Observable<StockStats>;
+
+  apiErrors: string | null = null;
 
   constructor(private stockApi: StockApiService) {
     this.dataRange$ = stockApi.getDataRange();
@@ -49,6 +51,14 @@ export class AppComponent {
     }
     
     this.stockApi.getBuySellTimes(fromDate, toDate)
-      .subscribe(result => this.bestPricePoints$.next(result));
+      .subscribe({
+        next: result => {
+          this.bestPricePoints$.next(result);
+          this.apiErrors = null;
+        },
+        error: (err) => {
+          this.apiErrors = err?.error?.message || 'Something went wrong...';
+        }
+      });
   }
 }
