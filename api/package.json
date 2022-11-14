@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn ts-node-dev src/index.ts",
-    "test": "yarn build && knex --knexfile ./dist/spec/knexfile-test.js migrate:latest && jasmine",
+    "test": "cross-env-shell NODE_ENV=test \"yarn build && knex --knexfile ./dist/src/knexfile.js migrate:latest && jasmine\"",
     "build": "rm -rf dist && tsc -p .",
     "db:up": "yarn build && knex --knexfile ./dist/src/knexfile.js migrate:latest",
     "db:down": "yarn build && knex --knexfile ./dist/src/knexfile.js migrate:rollback",
@@ -29,6 +29,7 @@
     "@types/jasmine": "^4.3.0",
     "chai": "^4.3.7",
     "chai-http": "^4.3.0",
+    "cross-env": "^7.0.3",
     "jasmine": "^4.5.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",

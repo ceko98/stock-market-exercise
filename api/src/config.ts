@@ -1,6 +1,12 @@
 import convict from 'convict';
 
 export const config = convict({
+  env: {
+    doc: 'App enviroment',
+    format: ['development', 'test'],
+    env: 'API_PORT',
+    default: 'development',
+  },
   port: {
     doc: 'API server port',
     format: Number,
