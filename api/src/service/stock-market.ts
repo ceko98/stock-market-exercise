@@ -28,25 +28,19 @@ export class StockMarketService {
       throw new Errors.BadRequestError('Invalida date range. Dates out of bound.');
     }
 
-    const stocks = await Stock.query().whereBetween('time', [fromDate, toDate]).orderBy('time');
+    const stocks = await Stock.query()
+      .whereBetween('time', [fromDate, toDate])
+      .orderBy('time');
+
     if (stocks.length === 0) {
       return { buy: null, sell: null };
     }
-
-    let bestBuyPoint = stocks[0];
-    let bestSellPoint = stocks[0];
-    for (let buyIdx = 1; buyIdx < stocks.length - 1; buyIdx++) {
-      for (let sellIdx = buyIdx + 1; sellIdx < stocks.length; sellIdx++) {
-        const currentProfit = stocks[sellIdx].price - stocks[buyIdx].price;
-        const currentBestProfit = bestSellPoint.price - bestBuyPoint.price;
-        if (currentProfit > currentBestProfit) {
-          bestBuyPoint = stocks[buyIdx];
-          bestSellPoint = stocks[sellIdx];
-        }
-      }      
+    if (stocks.length === 1) {
+      return { buy: stocks[0], sell: stocks[0] };
     }
-
-    return { buy: bestBuyPoint, sell: bestSellPoint };
+    const { profitMax, profitMin } = this.maxStockDiff(stocks);
+    
+    return { buy: profitMax, sell: profitMin };
   }
 
   @GET
@@ -62,5 +56,27 @@ export class StockMarketService {
       .first();
 
     return { start: new Date(range?.start), end: new Date(range?.end) };
+  }
+
+  private maxStockDiff(stocks: Stock[]) {
+    let max = stocks[0];
+    let min = stocks[0];
+    let maxProfit = -Infinity;
+    
+    let profitMax = stocks[0];
+    let profitMin = stocks[0];
+    
+    for (let i = 1; i < stocks.length; i++) {
+        if (stocks[i].price > max.price) {
+            max = stocks[i];
+            maxProfit = Math.max(max.price - min.price, maxProfit);
+            profitMax = max
+            profitMin = min
+        } else if (stocks[i].price < min.price){
+            min = stocks[i];
+            max = stocks[i];
+        }
+    }
+    return { profitMax, profitMin };
   }
 }
