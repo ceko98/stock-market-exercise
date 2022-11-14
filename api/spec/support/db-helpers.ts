@@ -1,22 +1,23 @@
-import { Knex } from "knex";
 import { Stock } from "../../src/models/stocks";
 import { Stock as StockType } from "../../src/types/stocks";
 
-export async function clear(knex: Knex) {
-  await Stock.query(knex).truncate();
-}
-
-export async function seed(knex: Knex, initDate: Date) {
+export async function seed() {
+  const initDate = new Date('2022-01-01');
   const stocks: StockType[] = [];
-  const entriesCount = 10;
+  const prices = [100, 13, 1, 6, 1, 6, 3, 5, 11, 55, 65, 2];
 
-  for (let index = 0; index < entriesCount; index++) {
-    stocks.push({ price: index, time: new Date(initDate.getTime() + index * 1000) });
-  }
+  prices.forEach((price, idx) => {
+    const time = new Date(initDate.getTime() + idx * 1000);
+    stocks.push({ price , time });
+  })
   
-  await knex.transaction(async trx => {
+  await Stock.transaction(async trx => {
     for (const stock of stocks) {
-      await trx.from('stock').insert(stock);
+      await Stock.query(trx).insert(stock);
     }
   });
+}
+
+export async function clear() {
+  await Stock.query().truncate();
 }
