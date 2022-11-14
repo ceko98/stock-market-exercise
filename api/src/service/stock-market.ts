@@ -40,7 +40,7 @@ export class StockMarketService {
     }
     const { profitMax, profitMin } = this.maxStockDiff(stocks);
     
-    return { buy: profitMax, sell: profitMin };
+    return { buy: profitMin, sell: profitMax };
   }
 
   @GET
