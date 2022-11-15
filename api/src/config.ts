@@ -4,7 +4,7 @@ export const config = convict({
   env: {
     doc: 'App enviroment',
     format: ['development', 'test'],
-    env: 'API_PORT',
+    env: 'NODE_ENV',
     default: 'development',
   },
   port: {
@@ -26,7 +26,7 @@ export const config = convict({
       doc: 'SQLite db test file path',
       format: String,
       env: 'SQLITE_FILE_TEST',
-      default: '../../database/test.sqlite',
+      default: './database/test.sqlite',
     },
   }
 });
